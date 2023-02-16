@@ -135,7 +135,7 @@ def initialize_model(args, layer_setups, optimizer, lr,
     args.objects["statsPrinter"] = statsPrinter
     args.objects["best_val_stats"] = None
     args.objects["current_ckpt"] = None
-    args.objects["early_stopping"] = controller.SlidingMeanEarlyStopping(
+    args.objects["early_stopping"] = controller.EarlyStopping(
         early_stopping)
 
     def post_epoch_callback(epoch, args):
@@ -145,7 +145,7 @@ def initialize_model(args, layer_setups, optimizer, lr,
         statsPrinter(epoch, epoch_stats_dict)
 
         # Early Stopping
-        if args.objects["early_stopping"](epoch_stats_dict["val_loss"]):
+        if args.objects["early_stopping"](epoch_stats_dict["val_acc"]):
             print("Early stopping...")
             args.epochs = epoch
 
