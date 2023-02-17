@@ -33,7 +33,7 @@ from pathlib import Path
 DATASET_LIST = [
     'squirrel_directed', 'chameleon_directed',
     'squirrel_filtered_directed', 'chameleon_filtered_directed',
-    'roman_empire', 'minesweeper', 'questions', 'amazon_ratings', 'workers'
+    'roman_empire', 'minesweeper', 'questions', 'amazon_ratings', 'tolokers'
 ]
 
 
@@ -302,7 +302,7 @@ class PlanetoidData:
             # to undirected
             if not 'directed' in dataset_str:
                 edges = np.concatenate((edges, edges[:, ::-1]), axis=0)
-            adj = nx.adjacency_matrix(nx.from_edgelist(edges)).astype(np.float32)
+            adj = nx.adjacency_matrix(nx.from_edgelist(edges, create_using=nx.DiGraph)).astype(np.float32)
 
             # get features and labels
             features = npz_data['node_features']
